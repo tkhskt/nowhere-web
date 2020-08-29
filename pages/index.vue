@@ -2,6 +2,7 @@
   <div class="container">
     <Logo class="logo" />
     <LinkText class="link-text" />
+    <Artwork />
     <div class="links" @mouseover="onHoverLink" @mouseleave="onHoverOutLink">
       <Trapezium :type="'spotify'" />
       <Trapezium :type="'twitter'" />
@@ -41,15 +42,19 @@ export default {
   position: absolute;
   top: $padding-page;
   left: $padding-page;
+  z-index: 2;
 }
 .link-text {
   position: absolute;
   transform: translate(-50%, -50%);
   left: 20%;
   top: 50%;
+  z-index: 2;
 }
 .links {
   display: flex;
+  z-index: 2;
+  display: none;
 }
 .frame {
   &--top {
