@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <Logo class="logo" />
-    <div class="links">
+    <div class="links" @mouseover="onHoverLink" @mouseleave="onHoverOutLink">
       <Trapezium :type="'spotify'" />
       <Trapezium :type="'twitter'" />
       <Trapezium :type="'fanbox'" />
@@ -15,7 +15,16 @@
 </template>
 
 <script>
-export default {}
+export default {
+  methods: {
+    onHoverLink() {
+      this.$store.dispatch('top/onHoverLink')
+    },
+    onHoverOutLink() {
+      this.$store.dispatch('top/onHoverOutLink')
+    },
+  },
+}
 </script>
 <style scoped lang="scss">
 .container {
