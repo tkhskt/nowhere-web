@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <Logo class="logo" />
     <div class="links">
       <Trapezium :type="'spotify'" />
       <Trapezium :type="'twitter'" />
@@ -7,6 +8,9 @@
       <Trapezium :type="'nowhere'" />
       <Trapezium :type="'youtube'" />
     </div>
+    <Frame class="frame--top" />
+    <Frame class="frame--bottom" />
+    <Clock />
   </div>
 </template>
 
@@ -22,7 +26,32 @@ export default {}
   justify-content: center;
   align-items: center;
 }
+.logo {
+  position: absolute;
+  top: $padding-page;
+  left: $padding-page;
+}
 .links {
   display: flex;
+}
+.frame {
+  &--top {
+    position: absolute;
+    top: $padding-page;
+    right: $padding-page;
+    transform-origin: center;
+    transform: rotate(180deg);
+  }
+  &--bottom {
+    position: absolute;
+    bottom: $padding-page;
+    left: $padding-page;
+    transform-origin: center;
+  }
+}
+.clock {
+  position: absolute;
+  bottom: $padding-page;
+  right: $padding-page;
 }
 </style>
