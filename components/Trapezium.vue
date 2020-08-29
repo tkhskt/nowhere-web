@@ -14,6 +14,7 @@
   transform: skewX(-47deg);
   transition: transform 0.1s ease-in 0.05s;
   will-change: transform;
+  cursor: pointer;
   &--spotify {
     background: $color-white;
     &--hover {

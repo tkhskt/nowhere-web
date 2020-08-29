@@ -1,6 +1,7 @@
 <template>
   <div class="container">
     <Logo class="logo" />
+    <LinkText class="link-text" />
     <div class="links" @mouseover="onHoverLink" @mouseleave="onHoverOutLink">
       <Trapezium :type="'spotify'" />
       <Trapezium :type="'twitter'" />
@@ -28,6 +29,7 @@ export default {
 </script>
 <style scoped lang="scss">
 .container {
+  position: relative;
   width: 100vw;
   height: 100vh;
   background: $color-background;
@@ -39,6 +41,12 @@ export default {
   position: absolute;
   top: $padding-page;
   left: $padding-page;
+}
+.link-text {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  left: 20%;
+  top: 50%;
 }
 .links {
   display: flex;
