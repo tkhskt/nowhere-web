@@ -29,7 +29,7 @@ export default {
   /*
    ** Global CSS
    */
-  css: [],
+  css: ['@/assets/css/ress.css'],
   /*
    ** Plugins to load before mounting the App
    ** https://nuxtjs.org/guide/plugins
@@ -46,6 +46,7 @@ export default {
   buildModules: [
     // Doc: https://github.com/nuxt-community/eslint-module
     '@nuxtjs/eslint-module',
+    '@nuxtjs/style-resources',
   ],
   /*
    ** Nuxt.js modules
@@ -54,6 +55,9 @@ export default {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
   ],
+  styleResources: {
+    scss: ['@assets/css/_constants.scss'],
+  },
   /*
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
