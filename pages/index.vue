@@ -17,7 +17,12 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
+  computed: {
+    ...mapState('top', ['type']),
+  },
   methods: {
     onHoverLink() {
       this.$store.dispatch('top/onHoverLink')
@@ -54,7 +59,6 @@ export default {
 .links {
   display: flex;
   z-index: 2;
-  display: none;
 }
 .frame {
   &--top {
