@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import YouTube from './youtube'
 import Nowhere from './nowhere'
+import Spotify from './spotify'
 import Empty from './empty'
 
 export default class Artwork {
@@ -46,6 +47,7 @@ export default class Artwork {
   initScene() {
     YouTube.init(this.renderer, this.size.windowW, this.size.windowH)
     Nowhere.init(this.renderer, this.size.windowW, this.size.windowH)
+    Spotify.init(this.renderer, this.size.windowW, this.size.windowH)
     Empty.init(this.renderer, this.size.windowW, this.size.windowH)
   }
 
@@ -57,6 +59,7 @@ export default class Artwork {
     this.setSize()
     YouTube.resize(this.size.windowW, this.size.windowH)
     Nowhere.resize(this.size.windowW, this.size.windowH)
+    Spotify.resize(this.size.windowW, this.size.windowH)
     Empty.resize(this.size.windowW, this.size.windowH)
     this.renderer.setSize(this.size.windowW, this.size.windowH)
   }
@@ -74,11 +77,12 @@ export default class Artwork {
       case 'nowhere':
         Nowhere.render()
         break
+      case 'spotify':
+        Spotify.render()
+        break
       case '':
         Empty.render()
         break
     }
-    // YouTube.render()
-    // Twitter.render()
   }
 }

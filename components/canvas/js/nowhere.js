@@ -45,8 +45,12 @@ class Nowhere {
 
     this.renderer = $renderer
 
-    this.scripts.forEach((script, index) => {
-      this.createMesh(script, index)
+    const loader = new THREE.FontLoader()
+    loader.load('helvetiker_regular.typeface.json', (font) => {
+      this.font = font
+      this.scripts.forEach((script, index) => {
+        this.createMesh(script, index)
+      })
     })
     // this.createMesh(0)
     this.composeRender()
@@ -69,31 +73,29 @@ class Nowhere {
   createMesh(script, index) {
     const distance = 100
 
-    const loader = new THREE.FontLoader()
-    loader.load('helvetiker_regular.typeface.json', (font) => {
-      this.geometry = new THREE.TextGeometry(script, {
-        font,
-        size: 2,
-        height: 0.1,
-        curveSegments: 20,
-      })
-      this.geometry.computeBoundingBox()
-      this.geometry.center()
-
-      const textMaterial = new THREE.MeshBasicMaterial({
-        color: 0xa0a0a0,
-      })
-
-      const mesh = new THREE.Mesh(this.geometry, textMaterial)
-      mesh.rotation.y = ((90 + 180) * Math.PI) / 180
-      if (index % 2 === 0) {
-        mesh.position.set(distance, 20.0, 0)
-      } else {
-        mesh.position.set(distance, -20.0, 0)
-      }
-
-      this.scene.add(mesh)
+    const font = this.font
+    this.geometry = new THREE.TextGeometry(script, {
+      font,
+      size: 2,
+      height: 0.1,
+      curveSegments: 20,
     })
+    this.geometry.computeBoundingBox()
+    this.geometry.center()
+
+    const textMaterial = new THREE.MeshBasicMaterial({
+      color: 0xa0a0a0,
+    })
+
+    const mesh = new THREE.Mesh(this.geometry, textMaterial)
+    mesh.rotation.y = ((90 + 180) * Math.PI) / 180
+    if (index % 2 === 0) {
+      mesh.position.set(distance, 20.0, 0)
+    } else {
+      mesh.position.set(distance, -20.0, 0)
+    }
+
+    this.scene.add(mesh)
   }
 
   composeRender() {
