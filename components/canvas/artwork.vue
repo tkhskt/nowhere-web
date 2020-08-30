@@ -1,10 +1,13 @@
 <template>
-  <section class="artwork">
-    <canvas ref="canvas" class="artwork__canvas"></canvas>
-  </section>
+  <transition name="fade">
+    <section class="artwork" v-show="isHoverLink">
+      <canvas ref="canvas" class="artwork__canvas"></canvas>
+    </section>
+  </transition>
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import Artwork from './js/artwork'
 
 export default {
@@ -14,11 +17,19 @@ export default {
     // 基本的にはここにthree.jsのオブジェクトを追加しない。
     return {}
   },
-  computed: {},
+  computed: {
+    ...mapState('top', ['type', 'isHoverLink']),
+  },
+  watch: {
+    type(value) {
+      this.artworkGL.changeScene(value)
+    },
+  },
   mounted() {
     // canvas要素を渡す。
     this.artworkGL = new Artwork({
       $canvas: this.$refs.canvas,
+      type: this.type,
     })
   },
   destroyed() {
@@ -36,5 +47,14 @@ export default {
   position: fixed;
   width: 100vw;
   height: 100vh;
+  background: #000000;
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s;
+  transition-delay: 0.05s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
 }
 </style>

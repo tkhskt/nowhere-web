@@ -15,8 +15,6 @@ class YouTube {
       windowH: null,
     }
 
-    this.clock = null
-
     this.frame = 0
     this.time = 0
     this.timeRatio = 0
@@ -37,8 +35,9 @@ class YouTube {
     ]
   }
 
-  init($canvas) {
-    this.setSize()
+  init($renderer, w, h) {
+    this.size.windowW = w
+    this.size.windowH = h
 
     this.scene = new THREE.Scene()
     this.camera = new THREE.PerspectiveCamera(
@@ -50,20 +49,8 @@ class YouTube {
     this.camera.position.set(0, 0, 0)
     this.camera.lookAt(new THREE.Vector3(1, 0, 0))
 
-    this.renderer = new THREE.WebGLRenderer({
-      canvas: $canvas,
-      antialias: true,
-    })
+    this.renderer = $renderer
 
-    // this.renderer.setPixelRatio(window.devicePixelRatio)
-    this.renderer.setPixelRatio(1)
-
-    // eslint-disable-next-line unicorn/number-literal-case
-    this.renderer.setClearColor(0x000000)
-    this.renderer.setSize(this.size.windowW, this.size.windowH)
-
-    this.clock = new THREE.Clock()
-    this.clock.start()
     this.images.forEach((imageUrl, index) => {
       this.createMesh(imageUrl, index)
     })
@@ -117,18 +104,11 @@ class YouTube {
     this.composer.addPass(this.customPass)
   }
 
-  setSize() {
-    this.size = {
-      windowW: window.innerWidth,
-      windowH: window.innerHeight,
-    }
-  }
-
-  resize() {
-    this.setSize()
+  resize(w, h) {
+    this.size.windowW = w
+    this.size.windowH = h
     this.camera.aspect = this.size.windowW / this.size.windowH
     this.camera.updateProjectionMatrix()
-    this.renderer.setSize(this.size.windowW, this.size.windowH)
   }
 
   render() {
