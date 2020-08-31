@@ -106,6 +106,11 @@ export default {
             name: '[path][name].[ext]',
           },
         })
+        config.module.rules.unshift({
+          test: /\.worker\.js$/,
+          loader: 'worker-loader'
+        })
+        config.output.globalObject = 'this'
       }
     },
   },

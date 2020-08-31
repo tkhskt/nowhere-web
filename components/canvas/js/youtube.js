@@ -111,7 +111,7 @@ class YouTube {
     this.camera.updateProjectionMatrix()
   }
 
-  render() {
+  render(clockDelta) {
     this.updateTimeRatio()
     this.totalTime += 0.01
     const x = (Math.sin(0.07 * this.totalTime * Math.PI) / 180) * this.timeRatio
@@ -119,7 +119,7 @@ class YouTube {
     this.camera.lookAt(new THREE.Vector3(-x, 0, z))
 
     // this.renderer.render(this.scene, this.camera)
-    this.composer.render()
+    this.composer.render(clockDelta)
   }
 }
 

@@ -220,7 +220,7 @@ class Nowhere {
     })
   }
 
-  render() {
+  render(clockDelta) {
     const delta = new Date().getTime() - this.lastUpdate
     if (delta >= 2000) {
       this.next()
@@ -231,7 +231,7 @@ class Nowhere {
     Object.keys(this.uniforms).forEach((item) => {
       this.material.uniforms[item].value = this.settings[item]
     })
-    this.composer.render()
+    this.composer.render(clockDelta)
   }
 }
 

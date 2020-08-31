@@ -112,9 +112,9 @@ class Nowhere {
     this.camera.updateProjectionMatrix()
   }
 
-  render() {
+  render(clockDelta) {
     this.updateTimeRatio()
-    this.composer.render()
+    this.composer.render(clockDelta)
   }
 }
 

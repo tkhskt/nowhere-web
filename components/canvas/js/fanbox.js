@@ -5,6 +5,7 @@ import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass'
 import { FilmPass } from 'three/examples/jsm/postprocessing/FilmPass'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js'
+// import Worker from '~/components/canvas/js/donut.worker'
 
 class Fanbox {
   constructor() {
@@ -43,6 +44,8 @@ class Fanbox {
 
     this.renderer = $renderer
     this.createMesh()
+    // const worker = new Worker()
+    // worker.postMessage('load')
   }
 
   async createMesh() {
@@ -52,10 +55,11 @@ class Fanbox {
     dracoLoader.setDecoderPath('gltf/')
     loader.setDRACOLoader(dracoLoader)
     const objPromise = new Promise((resolve) => {
-      loader.load(require('@/assets/obj/donut3.glb'), resolve)
+      loader.load(require('@/assets/obj/donut2.glb'), resolve)
     })
     const f = await objPromise
     const obj = f.scene
+
     obj.scale.set(30, 30, 30)
     obj.position.set(0, -20, 0) // 位置の初期化
     this.scene.add(obj)
@@ -93,7 +97,7 @@ class Fanbox {
     this.camera.updateProjectionMatrix()
   }
 
-  render() {
+  render(clockDelta) {
     if (!this.loaded) return
     this.updateTimeRatio()
     this.totalTime += 0.01
@@ -101,7 +105,7 @@ class Fanbox {
     const z = 60 * Math.cos((this.totalTime * 10 * Math.PI) / 180)
     this.camera.position.set(x, 60, z)
     this.camera.lookAt(this.scene.position)
-    this.composer.render()
+    this.composer.render(clockDelta)
   }
 }
 

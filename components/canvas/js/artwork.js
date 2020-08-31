@@ -14,10 +14,12 @@ export default class Artwork {
       windowH: null,
     }
     this.type = ''
+    this.clock = new THREE.Clock()
     this.init()
   }
 
   init() {
+    this.clock.start()
     window.addEventListener('resize', this.resize.bind(this))
     this.setSize()
     this.initRenderer()
@@ -73,18 +75,22 @@ export default class Artwork {
   }
 
   render() {
+    const delta = this.clock.getDelta()
     switch (this.type) {
       case 'youtube':
-        YouTube.render()
+        YouTube.render(delta)
         break
       case 'nowhere':
-        Nowhere.render()
+        Nowhere.render(delta)
         break
       case 'spotify':
-        Spotify.render()
+        Spotify.render(delta)
         break
       case 'fanbox':
-        Fanbox.render()
+        Fanbox.render(delta)
+        break
+      case 'twitter':
+        Empty.render()
         break
       case '':
         Empty.render()
