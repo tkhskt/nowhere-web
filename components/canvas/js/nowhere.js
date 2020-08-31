@@ -45,14 +45,12 @@ class Nowhere {
 
     this.renderer = $renderer
 
-    const loader = new THREE.FontLoader()
-    loader.load('helvetiker_regular.typeface.json', (font) => {
-      this.font = font
-      this.scripts.forEach((script, index) => {
-        this.createMesh(script, index)
-      })
+    this.font = new THREE.Font(
+      require('@/assets/font/helvetiker_regular.typeface.json')
+    )
+    this.scripts.forEach((script, index) => {
+      this.createMesh(script, index)
     })
-    // this.createMesh(0)
     this.composeRender()
   }
 

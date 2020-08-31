@@ -9,6 +9,7 @@
 <style scoped lang="scss">
 .link-text {
   font-size: 0.57em;
+  color: $color-gray;
 }
 .fade-enter-active,
 .fade-leave-active {

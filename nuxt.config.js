@@ -90,6 +90,22 @@ export default {
           test: /\.(vert|frag)$/i,
           use: ['raw-loader'],
         })
+        // config.module.rules.push({
+        //   test: /\.obj$/,
+        //   loader: 'webpack-obj-loader',
+        // })
+        config.module.rules.push({
+          test: /\.json$/,
+          loader: 'json-loader',
+          type: 'javascript/auto',
+        })
+        config.module.rules.push({
+          test: /\.(obj|mtl|gltf|glb)$/i,
+          loader: 'file-loader',
+          options: {
+            name: '[path][name].[ext]',
+          },
+        })
       }
     },
   },

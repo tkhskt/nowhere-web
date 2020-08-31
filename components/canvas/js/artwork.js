@@ -2,6 +2,7 @@ import * as THREE from 'three'
 import YouTube from './youtube'
 import Nowhere from './nowhere'
 import Spotify from './spotify'
+import Fanbox from './fanbox'
 import Empty from './empty'
 
 export default class Artwork {
@@ -48,6 +49,7 @@ export default class Artwork {
     YouTube.init(this.renderer, this.size.windowW, this.size.windowH)
     Nowhere.init(this.renderer, this.size.windowW, this.size.windowH)
     Spotify.init(this.renderer, this.size.windowW, this.size.windowH)
+    Fanbox.init(this.renderer, this.size.windowW, this.size.windowH)
     Empty.init(this.renderer, this.size.windowW, this.size.windowH)
   }
 
@@ -61,6 +63,7 @@ export default class Artwork {
     Nowhere.resize(this.size.windowW, this.size.windowH)
     Spotify.resize(this.size.windowW, this.size.windowH)
     Empty.resize(this.size.windowW, this.size.windowH)
+    Fanbox.resize(this.size.windowW, this.size.windowH)
     this.renderer.setSize(this.size.windowW, this.size.windowH)
   }
 
@@ -79,6 +82,9 @@ export default class Artwork {
         break
       case 'spotify':
         Spotify.render()
+        break
+      case 'fanbox':
+        Fanbox.render()
         break
       case '':
         Empty.render()
