@@ -13,7 +13,6 @@ self.addEventListener('message', (message) => {
   loader.setDRACOLoader(dracoLoader)
   loader.load(require('@/assets/obj/donut3.glb'), (result) => {
     const obj = result.scene
-    console.log(message.data)
     self.postMessage(JSON.parse(obj.toJson()))
   })
 })
