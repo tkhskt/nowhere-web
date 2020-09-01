@@ -3,6 +3,8 @@ import * as THREE from 'three'
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer'
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass'
 import { FilmPass } from 'three/examples/jsm/postprocessing/FilmPass'
+import vertexShader from '../glsl/youtube.vert'
+import fragmentShader from '../glsl/youtube.frag'
 
 class YouTube {
   constructor() {
@@ -33,6 +35,7 @@ class YouTube {
       'https://i.scdn.co/image/ab67616d0000b27322afe15cdab70494b8424177',
       'https://i.scdn.co/image/ab67616d0000b27322afe15cdab70494b8424177',
     ]
+    this.materials = []
   }
 
   init($renderer, w, h) {
@@ -71,16 +74,36 @@ class YouTube {
     this.times = new Date().getTime()
   }
 
-  createMesh(imageUrl, index) {
+  async createMesh(imageUrl, index) {
     const distance = 100
     const angle = (360 / this.images.length) * index
     const x = distance * Math.sin((angle / 180) * Math.PI)
     const z = distance * Math.cos((angle / 180) * Math.PI)
 
-    this.geometry = new THREE.PlaneBufferGeometry(30, 30, 30)
-    const material = new THREE.MeshBasicMaterial({
+    this.geometry = new THREE.PlaneGeometry(30, 30, 30)
+    // const material = new THREE.MeshBasicMaterial({
+    //   side: THREE.DoubleSide,
+    // })
+    const texturePromise = new Promise((resolve) => {
+      new THREE.TextureLoader().load(imageUrl, resolve)
+    })
+    const texture = await texturePromise
+
+    const material = new THREE.ShaderMaterial({
+      vertexShader,
+      fragmentShader,
+      uniforms: {
+        uTime: { value: 0.0 },
+        uTexture: {
+          value: texture,
+        },
+        uPercent: { value: 1.0 },
+      },
+      transparent: true,
+      depthWrite: true,
       side: THREE.DoubleSide,
     })
+    this.materials.push(material)
     const mesh = new THREE.Mesh(this.geometry, material)
     mesh.rotation.y = ((angle + 180) * Math.PI) / 180
     if (index % 2 === 0) {
@@ -88,11 +111,10 @@ class YouTube {
     } else {
       mesh.position.set(x, -15.0, z)
     }
+    // material.map = tex
+    // material.needsUpdate = true
+
     this.scene.add(mesh)
-    new THREE.TextureLoader().load(imageUrl, (tex) => {
-      material.map = tex
-      material.needsUpdate = true
-    })
   }
 
   composeRender() {
@@ -111,9 +133,15 @@ class YouTube {
     this.camera.updateProjectionMatrix()
   }
 
-  render(clockDelta) {
+  render(clockDelta, elapsedTime) {
     this.updateTimeRatio()
     this.totalTime += 0.01
+    this.materials.forEach((material, index) => {
+      material.uniforms.uTime.value = elapsedTime
+      material.uniforms.uPercent = {
+        value: 2 * Math.cos((index * this.totalTime * Math.PI) / 180),
+      }
+    })
     const x = (Math.sin(0.07 * this.totalTime * Math.PI) / 180) * this.timeRatio
     const z = (Math.cos(0.07 * this.totalTime * Math.PI) / 180) * this.timeRatio
     this.camera.lookAt(new THREE.Vector3(-x, 0, z))

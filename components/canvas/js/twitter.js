@@ -5,7 +5,6 @@ import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass'
 import { FilmPass } from 'three/examples/jsm/postprocessing/FilmPass'
 import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass'
 import { MeshLine, MeshLineMaterial } from 'three.meshline'
-// import Worker from '~/components/canvas/js/donut.worker'
 
 class Twitter {
   constructor() {

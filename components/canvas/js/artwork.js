@@ -81,7 +81,7 @@ export default class Artwork {
     const delta = this.clock.getDelta()
     switch (this.type) {
       case 'youtube':
-        YouTube.render(delta)
+        YouTube.render(delta, this.clock.getElapsedTime())
         break
       case 'nowhere':
         Nowhere.render(delta)

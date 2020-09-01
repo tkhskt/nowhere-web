@@ -4,7 +4,6 @@ import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass'
 import { FilmPass } from 'three/examples/jsm/postprocessing/FilmPass'
 import Power2, { TimelineMax } from 'gsap'
-
 import vertexShader from '../glsl/spotify.vert'
 import fragmentShader from '../glsl/spotify.frag'
 
