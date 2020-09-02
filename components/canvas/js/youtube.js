@@ -23,18 +23,7 @@ class YouTube {
 
     this.totalTime = 0
 
-    this.images = [
-      'https://i.scdn.co/image/ab67616d0000b27322afe15cdab70494b8424177',
-      'https://i.scdn.co/image/ab67616d0000b27322afe15cdab70494b8424177',
-      'https://i.scdn.co/image/ab67616d0000b27322afe15cdab70494b8424177',
-      'https://i.scdn.co/image/ab67616d0000b27322afe15cdab70494b8424177',
-      'https://i.scdn.co/image/ab67616d0000b27322afe15cdab70494b8424177',
-      'https://i.scdn.co/image/ab67616d0000b27322afe15cdab70494b8424177',
-      'https://i.scdn.co/image/ab67616d0000b27322afe15cdab70494b8424177',
-      'https://i.scdn.co/image/ab67616d0000b27322afe15cdab70494b8424177',
-      'https://i.scdn.co/image/ab67616d0000b27322afe15cdab70494b8424177',
-      'https://i.scdn.co/image/ab67616d0000b27322afe15cdab70494b8424177',
-    ]
+    this.images = []
     this.materials = []
   }
 
@@ -54,10 +43,14 @@ class YouTube {
 
     this.renderer = $renderer
 
+    this.composeRender()
+  }
+
+  setImages(images) {
+    this.images = images
     this.images.forEach((imageUrl, index) => {
       this.createMesh(imageUrl, index)
     })
-    this.composeRender()
   }
 
   updateTimeRatio() {
@@ -80,12 +73,11 @@ class YouTube {
     const x = distance * Math.sin((angle / 180) * Math.PI)
     const z = distance * Math.cos((angle / 180) * Math.PI)
 
-    this.geometry = new THREE.PlaneGeometry(30, 30, 30)
-    // const material = new THREE.MeshBasicMaterial({
-    //   side: THREE.DoubleSide,
-    // })
+    this.geometry = new THREE.PlaneBufferGeometry(40, 30, 30)
     const texturePromise = new Promise((resolve) => {
-      new THREE.TextureLoader().load(imageUrl, resolve)
+      const loader = new THREE.TextureLoader()
+      // loader.setCrossOrigin('*')
+      loader.load('http://cors-anywhere.herokuapp.com/' + imageUrl, resolve)
     })
     const texture = await texturePromise
 
@@ -111,8 +103,6 @@ class YouTube {
     } else {
       mesh.position.set(x, -15.0, z)
     }
-    // material.map = tex
-    // material.needsUpdate = true
 
     this.scene.add(mesh)
   }
@@ -145,8 +135,6 @@ class YouTube {
     const x = (Math.sin(0.07 * this.totalTime * Math.PI) / 180) * this.timeRatio
     const z = (Math.cos(0.07 * this.totalTime * Math.PI) / 180) * this.timeRatio
     this.camera.lookAt(new THREE.Vector3(-x, 0, z))
-
-    // this.renderer.render(this.scene, this.camera)
     this.composer.render(clockDelta)
   }
 }

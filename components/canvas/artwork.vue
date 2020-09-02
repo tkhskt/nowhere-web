@@ -1,6 +1,6 @@
 <template>
   <transition name="fade">
-    <section class="artwork" v-show="isHoverLink">
+    <section v-show="isHoverLink" class="artwork">
       <canvas ref="canvas" class="artwork__canvas"></canvas>
     </section>
   </transition>
@@ -12,10 +12,11 @@ import Artwork from './js/artwork'
 
 export default {
   components: {},
-  props: [],
+  props: ['images'],
   data() {
-    // 基本的にはここにthree.jsのオブジェクトを追加しない。
-    return {}
+    return {
+      mounted: false,
+    }
   },
   computed: {
     ...mapState('top', ['type', 'isHoverLink']),
@@ -24,19 +25,22 @@ export default {
     type(value) {
       this.artworkGL.changeScene(value)
     },
+    images(value) {
+      if (this.mounted) {
+        this.artworkGL.start(value.spotify, value.youtube)
+      }
+    },
   },
   mounted() {
-    // canvas要素を渡す。
     this.artworkGL = new Artwork({
       $canvas: this.$refs.canvas,
       type: this.type,
     })
+    this.artworkGL.start(this.images.spotify, this.images.youtube)
+    this.mounted = true
   },
   destroyed() {
     // canvasを作ったり壊したりする前提の場合はここに処理停止する処理を書く（今回省略）。
-  },
-  methods: {
-    // この中にthree.jsの処理をばりばり書かない。
   },
 }
 </script>

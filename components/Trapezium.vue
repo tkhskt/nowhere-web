@@ -12,7 +12,7 @@
   width: 6.5vw;
   height: 9.5vw;
   transform: skewX(-47deg);
-  transition: transform 0.1s ease-in 0.05s;
+  transition: transform 0.1s ease-in;
   will-change: transform;
   cursor: pointer;
   &--spotify {

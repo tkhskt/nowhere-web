@@ -2,7 +2,7 @@
   <div class="container">
     <Logo class="logo" />
     <LinkText class="link-text" />
-    <Artwork />
+    <Artwork :images="images" />
     <div class="links" @mouseover="onHoverLink" @mouseleave="onHoverOutLink">
       <Trapezium :type="'spotify'" />
       <Trapezium :type="'twitter'" />
@@ -18,10 +18,56 @@
 
 <script>
 import { mapState } from 'vuex'
+import axios from 'axios'
 
 export default {
+  data() {
+    return {
+      images: {
+        spotify: [],
+        youtube: [],
+      },
+    }
+  },
   computed: {
     ...mapState('top', ['type']),
+  },
+  mounted() {
+    const spotifyPromise = axios.get(
+      'https://us-central1-nowhere-web.cloudfunctions.net/spotify'
+    )
+    const youtubePromise = axios.get(
+      'https://us-central1-nowhere-web.cloudfunctions.net/youtube'
+    )
+    Promise.all([spotifyPromise, youtubePromise]).then((result) => {
+      const tracks = []
+      result[0].data.items.forEach((item) => {
+        const exist = tracks.some((track) => {
+          return track.name === item.name
+        })
+        if (!exist) {
+          tracks.push({
+            name: item.name,
+            img: item.images[0].url,
+          })
+        }
+      })
+      const spotifyImages = tracks.map((item) => {
+        return item.img
+      })
+      let youtubeImages = []
+      try {
+        youtubeImages = result[1].data.items.map((item) => {
+          return item.snippet.thumbnails.high.url
+        })
+      } catch {
+        youtubeImages = []
+      }
+      this.images = {
+        spotify: spotifyImages,
+        youtube: youtubeImages,
+      }
+    })
   },
   methods: {
     onHoverLink() {

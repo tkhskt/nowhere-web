@@ -24,6 +24,11 @@ export default class Artwork {
     window.addEventListener('resize', this.resize.bind(this))
     this.setSize()
     this.initRenderer()
+  }
+
+  start(spotify, youtube) {
+    Spotify.setImages(spotify)
+    YouTube.setImages(youtube)
     this.initScene()
     this.loop()
   }

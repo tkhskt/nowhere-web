@@ -26,13 +26,7 @@ class Nowhere {
 
     this.totalTime = 0
 
-    this.images = [
-      'https://i.scdn.co/image/ab67616d0000b2739c75d5625628a9dcdb448663',
-      'https://i.scdn.co/image/ab67616d0000b273b2cb6dea04617bc7e2c53593',
-      'https://i.scdn.co/image/ab67616d0000b2739660975340cd5cdb05dc5a23',
-      'https://i.scdn.co/image/ab67616d0000b2735e96dfafc7062b940cea81af',
-      'https://i.scdn.co/image/ab67616d0000b27372dc4f2c1c65e84685a72b54',
-    ]
+    this.images = []
 
     /* glsl setting */
 
@@ -70,16 +64,19 @@ class Nowhere {
     this.images.forEach((image, index) => {
       this.createMesh(image, index)
     })
-    // this.createMesh(0)
     this.composeRender()
 
     this.loadImages(() => {
-      this.createMesh()
       this.resize(w, h)
-      this.settings()
+      this.setting()
       this.paused = false
       this.lastUpdate = new Date().getTime()
     })
+  }
+
+  setImages(images) {
+    this.images = images
+    this.resize(this.size.windowW, this.size.windowH)
   }
 
   loadImages(cb) {
@@ -97,7 +94,7 @@ class Nowhere {
     })
   }
 
-  settings() {
+  setting() {
     this.settings = { progress: 0.5 }
     // if(this.debug) this.gui.add(this.settings, "progress", 0, 1, 0.01);
 
@@ -167,6 +164,7 @@ class Nowhere {
   }
 
   resize(w, h) {
+    if (this.textures.length === 0) return
     this.width = w
     this.height = h
     this.renderer.setSize(this.width, this.height)

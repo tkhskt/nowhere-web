@@ -51,12 +51,6 @@ class Twitter {
   }
 
   createMesh() {
-    // const line = new Float32Array(600)
-    // for (let j = 0; j < 200 * 5; j += 3) {
-    //   line[j] = -70 + 0.3 * j
-    //   line[j + 1] = 5 * Math.sin(0.01 * j)
-    //   line[j + 2] = -25
-    // }
     const points = []
     for (let j = 0; j < 200 * 5; j += 3) {
       points.push(new THREE.Vector3(-70 + 0.3 * j, 5 * Math.sin(0.01 * j), -25))
