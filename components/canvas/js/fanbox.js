@@ -55,7 +55,7 @@ class Fanbox {
     dracoLoader.setDecoderPath('gltf/')
     loader.setDRACOLoader(dracoLoader)
     const objPromise = new Promise((resolve) => {
-      loader.load(require('@/assets/obj/donut2.glb'), resolve)
+      loader.load(require('@/assets/obj/donut3.glb'), resolve)
     })
     const f = await objPromise
     const obj = f.scene

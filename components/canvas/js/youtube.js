@@ -126,10 +126,10 @@ class YouTube {
   render(clockDelta, elapsedTime) {
     this.updateTimeRatio()
     this.totalTime += 0.01
-    this.materials.forEach((material, index) => {
+    this.materials.forEach((material) => {
       material.uniforms.uTime.value = elapsedTime
       material.uniforms.uPercent = {
-        value: 2 * Math.cos((index * this.totalTime * Math.PI) / 180),
+        value: 2 * Math.cos((this.totalTime * Math.PI) / 180),
       }
     })
     const x = (Math.sin(0.07 * this.totalTime * Math.PI) / 180) * this.timeRatio

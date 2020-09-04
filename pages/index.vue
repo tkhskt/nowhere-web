@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <Loading class="load" />
     <Logo class="logo" />
     <LinkText class="link-text" />
     <Artwork :images="images" />
@@ -18,7 +19,8 @@
 
 <script>
 import { mapState } from 'vuex'
-import axios from 'axios'
+// import axios from 'axios'
+import firebase from '~/plugins/firebase.js'
 
 export default {
   data() {
@@ -33,32 +35,40 @@ export default {
     ...mapState('top', ['type']),
   },
   mounted() {
-    const spotifyPromise = axios.get(
-      'https://us-central1-nowhere-web.cloudfunctions.net/spotify'
-    )
-    const youtubePromise = axios.get(
-      'https://us-central1-nowhere-web.cloudfunctions.net/youtube'
-    )
+    const db = firebase.firestore()
+    // const spotifyPromise = axios.get(
+    //   'https://us-central1-nowhere-web.cloudfunctions.net/spotify'
+    // )
+    const youtubePromise = db.collection('youtube').get()
+    const spotifyPromise = db.collection('spotify').get()
     Promise.all([spotifyPromise, youtubePromise]).then((result) => {
-      const tracks = []
-      result[0].data.items.forEach((item) => {
-        const exist = tracks.some((track) => {
-          return track.name === item.name
+      // const tracks = []
+      // result[0].data.items.forEach((item) => {
+      //   const exist = tracks.some((track) => {
+      //     return track.name === item.name
+      //   })
+      //   if (!exist) {
+      //     tracks.push({
+      //       name: item.name,
+      //       img: item.images[0].url,
+      //     })
+      //   }
+      // })
+      // const spotifyImages = tracks.map((item) => {
+      //   return item.img
+      // })
+      let spotifyImages = []
+      try {
+        spotifyImages = result[0].docs.map((doc) => {
+          return doc.data().img
         })
-        if (!exist) {
-          tracks.push({
-            name: item.name,
-            img: item.images[0].url,
-          })
-        }
-      })
-      const spotifyImages = tracks.map((item) => {
-        return item.img
-      })
+      } catch {
+        spotifyImages = []
+      }
       let youtubeImages = []
       try {
-        youtubeImages = result[1].data.items.map((item) => {
-          return item.snippet.thumbnails.high.url
+        youtubeImages = result[1].docs.map((doc) => {
+          return doc.data().img
         })
       } catch {
         youtubeImages = []
@@ -67,6 +77,7 @@ export default {
         spotify: spotifyImages,
         youtube: youtubeImages,
       }
+      this.$store.dispatch('top/onLoaded')
     })
   },
   methods: {
@@ -88,6 +99,14 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.load {
+  position: fixed;
+  left: 100;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 50;
 }
 .logo {
   position: absolute;

@@ -16,6 +16,7 @@ export default {
   data() {
     return {
       mounted: false,
+      started: false,
     }
   },
   computed: {
@@ -26,8 +27,9 @@ export default {
       this.artworkGL.changeScene(value)
     },
     images(value) {
-      if (this.mounted) {
+      if (this.mounted && !this.started) {
         this.artworkGL.start(value.spotify, value.youtube)
+        this.started = true
       }
     },
   },
@@ -36,7 +38,14 @@ export default {
       $canvas: this.$refs.canvas,
       type: this.type,
     })
-    this.artworkGL.start(this.images.spotify, this.images.youtube)
+    if (
+      !this.started &&
+      this.images.spotify.length > 0 &&
+      this.images.youtube.length > 0
+    ) {
+      this.artworkGL.start(this.images.spotify, this.images.youtube)
+      this.started = true
+    }
     this.mounted = true
   },
   destroyed() {

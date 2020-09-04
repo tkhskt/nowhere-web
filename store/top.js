@@ -1,6 +1,7 @@
 export const state = () => ({
   isHoverLink: false,
   type: '',
+  loaded: false,
 })
 
 export const actions = {
@@ -14,6 +15,9 @@ export const actions = {
     commit('setIsHoverLink', false)
     commit('setType', '')
   },
+  onLoaded({ commit }) {
+    commit('setLoaded', true)
+  },
 }
 
 export const mutations = {
@@ -22,5 +26,8 @@ export const mutations = {
   },
   setType(state, value) {
     state.type = value
+  },
+  setLoaded(state, value) {
+    state.loaded = value
   },
 }
