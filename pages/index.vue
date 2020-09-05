@@ -37,8 +37,8 @@ export default {
   watch: {
     size(value) {
       const container = this.$refs.container
-      container.style.width = value.width
-      container.style.height = value.height
+      container.style.width = value.width + 'px'
+      container.style.height = value.height + 'px'
       console.log('aaaa')
       // const load = this.$refs.load
       // load.style.width = value.width
