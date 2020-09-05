@@ -14,21 +14,21 @@
   display: flex;
   transition: padding 0.1s ease-out;
   &--pressed {
-    padding-left: 10vw;
+    padding-left: 10vmin;
     transition: padding 0.2s ease-in;
   }
 }
 .arrow {
   display: inline-block;
-  width: 7.2vw;
-  height: 7.2vw;
-  margin: 0 -0.6vw;
+  width: 7.2vmin;
+  height: 7.2vmin;
+  margin: 0 -0.6vmin;
   border-top: 2px solid $color-white;
   border-right: 2px solid $color-white;
   transform: rotate(45deg);
   transition: margin 0.1s ease-out;
   &--pressed {
-    margin: 0 -1.5vw;
+    margin: 0 -1.5vmin;
     transition: margin 0.2s ease-in;
   }
 }
