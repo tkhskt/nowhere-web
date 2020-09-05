@@ -11,9 +11,9 @@ void main() {
   gl_FragColor = texture2D( uTexture, vUv );
   if (gl_FragColor.a < 0.5 ){ discard; }
 
-  float r = texture2D( uTexture, vUv + vec2( shift, 0.0 ) ).r;
+  float r = texture2D( uTexture, vUv + vec2( shift, 0.0 )).r;
   float g = texture2D( uTexture, vUv ).g;
-  float b = texture2D( uTexture, vUv - vec2( shift, 0.0 ) + wave).b;
+  float b = texture2D( uTexture, vUv - vec2( shift, 0.0 )).b;
 
   vec3 color = vec3( r, g, b );
 
