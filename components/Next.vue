@@ -12,10 +12,10 @@
 <style scoped lang="scss">
 .next {
   display: flex;
-  transition: padding 0.2s ease-in;
+  transition: padding 0.1s ease-out;
   &--pressed {
     padding-left: 10vw;
-    transition: padding 0.2s ease-out;
+    transition: padding 0.2s ease-in;
   }
 }
 .arrow {
@@ -26,10 +26,10 @@
   border-top: 2px solid $color-white;
   border-right: 2px solid $color-white;
   transform: rotate(45deg);
-  transition: margin 0.2s ease-in;
+  transition: margin 0.1s ease-out;
   &--pressed {
     margin: 0 -1.5vw;
-    transition: margin 0.2s ease-out;
+    transition: margin 0.2s ease-in;
   }
 }
 </style>

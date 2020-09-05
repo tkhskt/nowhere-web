@@ -24,15 +24,16 @@ class Nowhere {
     this.totalTime = 0
 
     this.scripts = [
-      'A world where counting the years is meaningless…',
-      'One day, the alter opens up and the girl wake up',
+      'PLEASE WATCH OVER HER',
+      // 'A world where counting the years is meaningless…',
+      // 'One day, the alter opens up and the girl wake up',
     ]
+    this.mobileSctipt = ['PLEASE WATCH OVER HER']
   }
 
   init($renderer, w, h) {
     this.size.windowW = w
     this.size.windowH = h
-
     this.scene = new THREE.Scene()
     this.camera = new THREE.PerspectiveCamera(
       50,
@@ -48,9 +49,11 @@ class Nowhere {
     this.font = new THREE.Font(
       require('@/assets/font/helvetiker_regular.typeface.json')
     )
+
     this.scripts.forEach((script, index) => {
       this.createMesh(script, index)
     })
+
     this.composeRender()
   }
 
@@ -72,27 +75,26 @@ class Nowhere {
     const distance = 100
 
     const font = this.font
-    this.geometry = new THREE.TextGeometry(script, {
+    const geometry = new THREE.TextGeometry(script, {
       font,
       size: 2,
       height: 0.1,
       curveSegments: 20,
     })
-    this.geometry.computeBoundingBox()
-    this.geometry.center()
+    geometry.computeBoundingBox()
+    geometry.center()
 
     const textMaterial = new THREE.MeshBasicMaterial({
       color: 0xa0a0a0,
     })
 
-    const mesh = new THREE.Mesh(this.geometry, textMaterial)
+    const mesh = new THREE.Mesh(geometry, textMaterial)
     mesh.rotation.y = ((90 + 180) * Math.PI) / 180
     if (index % 2 === 0) {
       mesh.position.set(distance, 20.0, 0)
     } else {
       mesh.position.set(distance, -20.0, 0)
     }
-
     this.scene.add(mesh)
   }
 
