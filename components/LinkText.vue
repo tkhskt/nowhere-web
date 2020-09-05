@@ -1,16 +1,23 @@
 <template>
   <transition name="fade">
-    <div v-show="(type != '' && isHoverLink) || isMobile" class="link-text">
+    <a
+      v-show="(type != '' && isHoverLink) || isMobile"
+      class="link-text"
+      :href="getUrl"
+      target="_blank"
+    >
       <p>{{ typeText }}</p>
       <div v-if="isMobile" class="underline"></div>
-    </div>
+    </a>
   </transition>
 </template>
 
 <style scoped lang="scss">
 .link-text {
+  display: block;
   font-size: 0.57em;
   color: $color-gray;
+  text-decoration: none;
   @media screen and (max-width: $breakpoint) {
     font-size: 7vmin;
     color: $color-white;
@@ -52,6 +59,21 @@ export default {
           return 'Nowhere'
         case 'youtube':
           return 'YouTube'
+      }
+      return ''
+    },
+    getUrl() {
+      switch (this.type) {
+        case 'youtube':
+          return 'https://www.youtube.com/channel/UCHfPYJaCDADVssISUw-49TQ'
+        case 'twitter':
+          return 'https://twitter.com/_NowhereEnd_'
+        case 'fanbox':
+          return 'https://nowhere.fanbox.cc'
+        case 'nowhere':
+          return 'https://kawaiimusic.jp'
+        case 'spotify':
+          return 'https://open.spotify.com/artist/1liqj1eLlMPbpB0mc4QFMu'
       }
       return ''
     },

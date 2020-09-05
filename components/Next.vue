@@ -15,7 +15,7 @@
   transition: padding 0.1s ease-out;
   &--pressed {
     padding-left: 10vmin;
-    transition: padding 0.2s ease-in;
+    transition: padding 0.1s ease-in;
   }
 }
 .arrow {
@@ -29,7 +29,7 @@
   transition: margin 0.1s ease-out;
   &--pressed {
     margin: 0 -1.5vmin;
-    transition: margin 0.2s ease-in;
+    transition: margin 0.1s ease-in;
   }
 }
 </style>
@@ -37,7 +37,7 @@
 import { mapState } from 'vuex'
 
 export default {
-  props: ['touch'],
+  props: ['touch', 'swiped'],
   data() {
     return {
       types: ['youtube', 'nowhere', 'fanbox', 'twitter', 'spotify'],
@@ -48,9 +48,9 @@ export default {
     ...mapState('top', ['isMobile']),
   },
   watch: {
-    touch(value) {
+    swiped(value) {
       if (!this.isMobile) return
-      if (!value) {
+      if (value) {
         this.currentTypeIndex = (this.currentTypeIndex + 1) % this.types.length
         this.$store.dispatch(
           'top/onHoverType',

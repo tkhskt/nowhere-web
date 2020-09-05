@@ -4,7 +4,7 @@
     <Logo class="logo" />
     <LinkText class="link-text" />
     <Artwork :images="images" />
-    <Next v-show="isMobile" class="next" :touch="touch" />
+    <Next v-show="isMobile" class="next" :touch="touch" :swiped="swiped" />
     <div
       v-show="!isMobile"
       class="links"
@@ -25,7 +25,6 @@
 
 <script>
 import { mapState } from 'vuex'
-// import axios from 'axios'
 import firebase from '~/plugins/firebase.js'
 
 export default {
@@ -36,6 +35,9 @@ export default {
         youtube: [],
       },
       touch: false,
+      startX: 0,
+      endX: 0,
+      swiped: false,
     }
   },
   computed: {
@@ -47,6 +49,9 @@ export default {
       container.style.width = value.width + 'px'
       container.style.height = value.height + 'px'
     },
+    type(value) {
+      this.swiped = false
+    },
   },
   mounted() {
     this.$nextTick(() => {
@@ -57,6 +62,7 @@ export default {
       window.addEventListener('resize', this.onResize)
       this.$refs.container.addEventListener('touchstart', this.onTouchStart)
       this.$refs.container.addEventListener('touchend', this.onTouchEnd)
+      this.$refs.container.addEventListener('touchmove', this.onTouchMove)
     })
     const db = firebase.firestore()
     const youtubePromise = db.collection('youtube').get()
@@ -89,6 +95,7 @@ export default {
     window.removeEventListener('resize', this.onResize)
     this.$refs.container.removeEventListener('touchstart', this.onTouchStart)
     this.$refs.container.removeEventListener('touchend', this.onTouchEnd)
+    this.$refs.container.removeEventListener('touchmove', this.onTouchMove)
   },
   methods: {
     onHoverLink() {
@@ -104,11 +111,20 @@ export default {
       }
       this.$store.dispatch('top/onResize', size)
     },
-    onTouchStart() {
-      this.touch = true
+    onTouchStart(e) {
+      this.startX = e.touches[0].pageX
     },
-    onTouchEnd() {
+    onTouchMove(e) {
+      if (e.changedTouches[0].pageX - this.startX > 15) {
+        this.touch = true
+      }
+    },
+    onTouchEnd(e) {
+      const endX = e.changedTouches[0].pageX
       this.touch = false
+      if (endX - this.startX > 30) {
+        this.swiped = true
+      }
     },
   },
 }

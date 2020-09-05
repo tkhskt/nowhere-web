@@ -1,14 +1,17 @@
 <template>
-  <div
+  <a
     class="trapezium"
     :class="[typeClass, isHoverLink ? hoverClass : '']"
+    :href="getUrl"
+    target="_blank"
     @mouseover="onHover"
     @mouseleave="onHoverOut"
-  ></div>
+  ></a>
 </template>
 
 <style scoped lang="scss">
 .trapezium {
+  display: block;
   width: 6.5vw;
   height: 9.5vw;
   transform: skewX(-47deg);
@@ -69,6 +72,21 @@ export default {
     },
     hoverClass() {
       return 'trapezium--' + this.type + '--hover'
+    },
+    getUrl() {
+      switch (this.type) {
+        case 'youtube':
+          return 'https://www.youtube.com/channel/UCHfPYJaCDADVssISUw-49TQ'
+        case 'twitter':
+          return 'https://twitter.com/_NowhereEnd_'
+        case 'fanbox':
+          return 'https://nowhere.fanbox.cc'
+        case 'nowhere':
+          return 'https://kawaiimusic.jp'
+        case 'spotify':
+          return 'https://open.spotify.com/artist/1liqj1eLlMPbpB0mc4QFMu'
+      }
+      return ''
     },
   },
   methods: {

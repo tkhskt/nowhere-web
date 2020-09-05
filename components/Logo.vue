@@ -10,6 +10,7 @@
   user-select: none;
   &__title {
     line-height: 0.9;
+    margin-left: -0.07em;
     @media screen and (max-width: $breakpoint) {
       font-size: 12.5vmin;
       color: $color-gray;

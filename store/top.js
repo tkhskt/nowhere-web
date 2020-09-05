@@ -24,7 +24,12 @@ export const actions = {
     commit('setLoaded', true)
   },
   onResize({ commit }, value) {
-    commit('setIsMobile', value.width < 1024)
+    if (value.width < 1024) {
+      commit('setIsMobile', true)
+      commit('setType', 'youtube')
+    } else {
+      commit('setIsMobile', false)
+    }
     commit('setSize', value)
   },
 }
