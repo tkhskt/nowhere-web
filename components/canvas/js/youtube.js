@@ -76,7 +76,6 @@ class YouTube {
     this.geometry = new THREE.PlaneBufferGeometry(40, 30, 30)
     const texturePromise = new Promise((resolve) => {
       const loader = new THREE.TextureLoader()
-      // loader.setCrossOrigin('*')
       loader.load('http://cors-anywhere.herokuapp.com/' + imageUrl, resolve)
     })
     const texture = await texturePromise
@@ -130,10 +129,10 @@ class YouTube {
     this.materials.forEach((material) => {
       material.uniforms.uTime.value = elapsedTime
       material.uniforms.uPercent = {
-        value: 0,
+        value: 2 * Math.cos((this.totalTime * Math.PI) / 180),
       }
+      material.needsUpdate = true
     })
-    //  2 * Math.cos((this.totalTime * Math.PI) / 180)
     const x = (Math.sin(0.07 * this.totalTime * Math.PI) / 180) * this.timeRatio
     const z = (Math.cos(0.07 * this.totalTime * Math.PI) / 180) * this.timeRatio
     this.camera.lookAt(new THREE.Vector3(-x, 0, z))
