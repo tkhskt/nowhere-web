@@ -106,6 +106,18 @@ class Twitter {
     this.size.windowH = h
     this.camera.aspect = this.size.windowW / this.size.windowH
     this.resolution.set(w, h)
+    const material = new MeshLineMaterial({
+      useMap: false,
+      color: new THREE.Color(0x1da1f2),
+      opacity: 1,
+      resolution: this.resolution,
+      sizeAttenuation: false,
+      lineWidth: 10,
+      near: this.camera.near,
+      far: this.camera.far,
+    })
+    this.mesh.dispose()
+    this.mesh.material = material
     this.composer.setSize(w, h)
     this.camera.updateProjectionMatrix()
   }
