@@ -143,6 +143,11 @@ export default {
   left: 20%;
   top: 50%;
   z-index: 2;
+  @media screen and (max-width: $breakpoint) {
+    bottom: 30%;
+    left: 50%;
+    top: auto;
+  }
 }
 .next {
   z-index: 2;

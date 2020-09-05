@@ -100,7 +100,7 @@ class Nowhere {
     this.composer = new EffectComposer(this.renderer)
     const renderPass = new RenderPass(this.scene, this.camera)
     this.composer.addPass(renderPass)
-    this.customPass = new FilmPass()
+    this.customPass = new FilmPass(0.7, 0, 0, 0)
     this.customPass.renderToScreen = true
     this.composer.addPass(this.customPass)
   }
@@ -109,6 +109,7 @@ class Nowhere {
     this.size.windowW = w
     this.size.windowH = h
     this.camera.aspect = this.size.windowW / this.size.windowH
+    this.composer.setSize(w, h)
     this.camera.updateProjectionMatrix()
   }
 

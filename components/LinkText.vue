@@ -1,7 +1,8 @@
 <template>
   <transition name="fade">
-    <div v-show="type != ''" class="link-text">
+    <div v-show="(type != '' && isHoverLink) || isMobile" class="link-text">
       <p>{{ typeText }}</p>
+      <div v-if="isMobile" class="underline"></div>
     </div>
   </transition>
 </template>
@@ -10,7 +11,18 @@
 .link-text {
   font-size: 0.57em;
   color: $color-gray;
+  @media screen and (max-width: $breakpoint) {
+    font-size: 7vmin;
+    color: $color-white;
+  }
 }
+.underline {
+  width: 100%;
+  height: 2px;
+  margin-top: 1vmin;
+  background: $color-white;
+}
+
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.2s;
@@ -27,7 +39,7 @@ export default {
     return {}
   },
   computed: {
-    ...mapState('top', ['type']),
+    ...mapState('top', ['type', 'isMobile', 'isHoverLink']),
     typeText() {
       switch (this.type) {
         case 'spotify':

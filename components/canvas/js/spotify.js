@@ -158,7 +158,7 @@ class Nowhere {
     this.composer = new EffectComposer(this.renderer)
     const renderPass = new RenderPass(this.scene, this.camera)
     this.composer.addPass(renderPass)
-    this.customPass = new FilmPass()
+    this.customPass = new FilmPass(0.7, 0, 0, 1)
     this.customPass.renderToScreen = true
     this.composer.addPass(this.customPass)
   }
@@ -194,6 +194,7 @@ class Nowhere {
 
     this.plane.scale.x = this.camera.aspect
     this.plane.scale.y = 1
+    this.composer.setSize(w, h)
     this.camera.updateProjectionMatrix()
   }
 
