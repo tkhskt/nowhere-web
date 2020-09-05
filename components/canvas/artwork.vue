@@ -1,6 +1,6 @@
 <template>
   <transition name="fade">
-    <section v-show="isHoverLink" class="artwork">
+    <section v-show="isHoverLink" ref="artwork" class="artwork">
       <canvas ref="canvas" class="artwork__canvas"></canvas>
     </section>
   </transition>
@@ -20,7 +20,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('top', ['type', 'isHoverLink']),
+    ...mapState('top', ['type', 'isHoverLink', 'size']),
   },
   watch: {
     type(value) {
@@ -31,6 +31,11 @@ export default {
         this.artworkGL.start(value.spotify, value.youtube)
         this.started = true
       }
+    },
+    size(value) {
+      const artwork = this.$refs.artwork
+      artwork.style.width = value.width
+      artwork.style.height = value.height
     },
   },
   mounted() {

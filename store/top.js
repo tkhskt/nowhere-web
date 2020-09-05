@@ -2,6 +2,10 @@ export const state = () => ({
   isHoverLink: false,
   type: '',
   loaded: false,
+  size: {
+    width: 0,
+    height: 0,
+  },
 })
 
 export const actions = {
@@ -18,6 +22,9 @@ export const actions = {
   onLoaded({ commit }) {
     commit('setLoaded', true)
   },
+  onResize({ commit }, value) {
+    commit('setSize', value)
+  },
 }
 
 export const mutations = {
@@ -29,5 +36,8 @@ export const mutations = {
   },
   setLoaded(state, value) {
     state.loaded = value
+  },
+  setSize(state, value) {
+    state.size = value
   },
 }

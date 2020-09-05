@@ -1,6 +1,6 @@
 <template>
-  <div class="container">
-    <Loading class="load" />
+  <div ref="container" class="container">
+    <Loading ref="load" class="load" />
     <Logo class="logo" />
     <LinkText class="link-text" />
     <Artwork :images="images" />
@@ -32,31 +32,30 @@ export default {
     }
   },
   computed: {
-    ...mapState('top', ['type']),
+    ...mapState('top', ['type', 'size']),
+  },
+  watch: {
+    size(value) {
+      const container = this.$refs.container
+      container.style.width = value.width
+      container.style.height = value.height
+      // const load = this.$refs.load
+      // load.style.width = value.width
+      // load.style.height = value.height
+    },
   },
   mounted() {
+    this.$nextTick(() => {
+      this.$store.dispatch('top/onResize', {
+        width: window.innerWidth,
+        height: window.innerHeight,
+      })
+      window.addEventListener('resize', this.onResize)
+    })
     const db = firebase.firestore()
-    // const spotifyPromise = axios.get(
-    //   'https://us-central1-nowhere-web.cloudfunctions.net/spotify'
-    // )
     const youtubePromise = db.collection('youtube').get()
     const spotifyPromise = db.collection('spotify').get()
     Promise.all([spotifyPromise, youtubePromise]).then((result) => {
-      // const tracks = []
-      // result[0].data.items.forEach((item) => {
-      //   const exist = tracks.some((track) => {
-      //     return track.name === item.name
-      //   })
-      //   if (!exist) {
-      //     tracks.push({
-      //       name: item.name,
-      //       img: item.images[0].url,
-      //     })
-      //   }
-      // })
-      // const spotifyImages = tracks.map((item) => {
-      //   return item.img
-      // })
       let spotifyImages = []
       try {
         spotifyImages = result[0].docs.map((doc) => {
@@ -80,12 +79,22 @@ export default {
       this.$store.dispatch('top/onLoaded')
     })
   },
+  beforeDestroy() {
+    window.removeEventListener('resize', this.onResize)
+  },
   methods: {
     onHoverLink() {
       this.$store.dispatch('top/onHoverLink')
     },
     onHoverOutLink() {
       this.$store.dispatch('top/onHoverOutLink')
+    },
+    onResize() {
+      const size = {
+        width: window.innerWidth,
+        height: window.innerHeight,
+      }
+      this.$store.dispatch('top/onResize', size)
     },
   },
 }

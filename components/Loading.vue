@@ -1,6 +1,6 @@
 <template>
   <transition name="fade">
-    <div v-if="show" class="loading">
+    <div v-show="show" class="loading">
       <div class="text">
         <div class="text-container">
           <p class="text__initiate--dummy">INITIATING SYSTEM 2....</p>
