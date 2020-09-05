@@ -91,5 +91,5 @@ sw.*
 
 functions/
 
-firebase.js
+.env
 firestore.rules

@@ -1,3 +1,7 @@
+require('dotenv').config()
+// eslint-disable-next-line no-unused-vars
+const { FIREBASE_KEY } = process.env
+
 export default {
   /*
    ** Nuxt rendering mode
@@ -63,6 +67,7 @@ export default {
     // Doc: https://github.com/nuxt-community/eslint-module
     '@nuxtjs/eslint-module',
     '@nuxtjs/style-resources',
+    '@nuxtjs/dotenv',
   ],
   /*
    ** Nuxt.js modules
