@@ -1,3 +1,5 @@
+precision mediump float;
+
 varying vec2 vUv;
 
 uniform float uPercent;
