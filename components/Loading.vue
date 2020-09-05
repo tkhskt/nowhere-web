@@ -1,6 +1,6 @@
 <template>
   <transition name="fade">
-    <div v-show="show" class="loading">
+    <div v-show="show" ref="loading" class="loading">
       <div class="text">
         <div class="text-container">
           <p class="text__initiate--dummy">INITIATING SYSTEM 2....</p>
@@ -141,7 +141,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('top', ['loaded']),
+    ...mapState('top', ['loaded', 'size']),
   },
   watch: {
     loaded(value) {
@@ -149,6 +149,11 @@ export default {
         // this.animateLine()
         this.delete()
       }
+    },
+    size(value) {
+      const loading = this.$refs.loading
+      loading.style.width = value.width + 'px'
+      loading.style.height = value.height + 'px'
     },
   },
   mounted() {

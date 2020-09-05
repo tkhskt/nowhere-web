@@ -1,6 +1,6 @@
 <template>
   <div ref="container" class="container">
-    <Loading ref="load" class="load" />
+    <Loading class="load" />
     <Logo class="logo" />
     <LinkText class="link-text" />
     <Artwork :images="images" />
@@ -40,8 +40,8 @@ export default {
       container.style.width = value.width + 'px'
       container.style.height = value.height + 'px'
       // const load = this.$refs.load
-      // load.style.width = value.width
-      // load.style.height = value.height
+      // load.style.width = value.width + 'px'
+      // load.style.height = value.height + 'px'
     },
   },
   mounted() {

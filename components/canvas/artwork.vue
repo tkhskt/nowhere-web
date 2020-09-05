@@ -63,8 +63,6 @@ export default {
 /* スタイルなどお好みで*/
 .artwork {
   position: fixed;
-  width: 100vw;
-  height: 100vh;
   background: #000000;
 }
 .fade-enter-active,
