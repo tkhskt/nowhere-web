@@ -130,9 +130,10 @@ class YouTube {
     this.materials.forEach((material) => {
       material.uniforms.uTime.value = elapsedTime
       material.uniforms.uPercent = {
-        value: 2 * Math.cos((this.totalTime * Math.PI) / 180),
+        value: 1.4,
       }
     })
+    //  2 * Math.cos((this.totalTime * Math.PI) / 180)
     const x = (Math.sin(0.07 * this.totalTime * Math.PI) / 180) * this.timeRatio
     const z = (Math.cos(0.07 * this.totalTime * Math.PI) / 180) * this.timeRatio
     this.camera.lookAt(new THREE.Vector3(-x, 0, z))
