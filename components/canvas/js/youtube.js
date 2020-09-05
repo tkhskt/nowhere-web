@@ -130,7 +130,7 @@ class YouTube {
     this.materials.forEach((material) => {
       material.uniforms.uTime.value = elapsedTime
       material.uniforms.uPercent = {
-        value: 1.4,
+        value: 0,
       }
     })
     //  2 * Math.cos((this.totalTime * Math.PI) / 180)
