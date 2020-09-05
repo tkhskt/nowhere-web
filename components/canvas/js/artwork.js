@@ -68,13 +68,14 @@ export default class Artwork {
 
   resize() {
     this.setSize()
+    this.renderer.setSize(this.size.windowW, this.size.windowH)
+    this.renderer.setPixelRatio(1)
     YouTube.resize(this.size.windowW, this.size.windowH)
     Nowhere.resize(this.size.windowW, this.size.windowH)
     Spotify.resize(this.size.windowW, this.size.windowH)
     Empty.resize(this.size.windowW, this.size.windowH)
     Fanbox.resize(this.size.windowW, this.size.windowH)
     Twitter.resize(this.size.windowW, this.size.windowH)
-    this.renderer.setSize(this.size.windowW, this.size.windowH)
   }
 
   loop() {
