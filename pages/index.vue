@@ -39,7 +39,6 @@ export default {
       const container = this.$refs.container
       container.style.width = value.width + 'px'
       container.style.height = value.height + 'px'
-      console.log('aaaa')
       // const load = this.$refs.load
       // load.style.width = value.width
       // load.style.height = value.height
@@ -51,7 +50,7 @@ export default {
         width: window.innerWidth,
         height: window.innerHeight,
       })
-      window.addEventListener('orientationchange', this.onResize)
+      window.addEventListener('resize', this.onResize)
     })
     const db = firebase.firestore()
     const youtubePromise = db.collection('youtube').get()

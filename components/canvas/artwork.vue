@@ -34,8 +34,8 @@ export default {
     },
     size(value) {
       const artwork = this.$refs.artwork
-      artwork.style.width = value.width
-      artwork.style.height = value.height
+      artwork.style.width = value.width + 'px'
+      artwork.style.height = value.height + 'px'
     },
   },
   mounted() {
