@@ -1,6 +1,6 @@
 <template>
   <transition name="fade">
-    <div v-if="type != ''" class="link-text">
+    <div v-show="type != ''" class="link-text">
       <p>{{ typeText }}</p>
     </div>
   </transition>

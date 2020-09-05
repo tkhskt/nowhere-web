@@ -1,0 +1,67 @@
+<template>
+  <div class="next" :class="{ 'next--pressed': touch }">
+    <template v-for="n in 4">
+      <div :key="n" class="arrow" :class="{ 'arrow--pressed': touch }">
+        <span class="arrow__top"></span>
+        <span class="arrow__bottom"></span>
+      </div>
+    </template>
+  </div>
+</template>
+
+<style scoped lang="scss">
+.next {
+  display: flex;
+  transition: padding 0.2s ease-in;
+  &--pressed {
+    padding-left: 10vw;
+    transition: padding 0.2s ease-out;
+  }
+}
+.arrow {
+  display: inline-block;
+  width: 7.2vw;
+  height: 7.2vw;
+  margin: 0 -0.6vw;
+  border-top: 2px solid $color-white;
+  border-right: 2px solid $color-white;
+  transform: rotate(45deg);
+  transition: margin 0.2s ease-in;
+  &--pressed {
+    margin: 0 -1.5vw;
+    transition: margin 0.2s ease-out;
+  }
+}
+</style>
+<script>
+import { mapState } from 'vuex'
+
+export default {
+  props: ['touch'],
+  data() {
+    return {
+      types: ['youtube', 'nowhere', 'fanbox', 'twitter', 'spotify'],
+      currentTypeIndex: 0,
+    }
+  },
+  computed: {
+    ...mapState('top', ['isMobile']),
+  },
+  watch: {
+    touch(value) {
+      if (!this.isMobile) return
+      if (!value) {
+        this.currentTypeIndex = (this.currentTypeIndex + 1) % this.types.length
+        this.$store.dispatch(
+          'top/onHoverType',
+          this.types[this.currentTypeIndex]
+        )
+      }
+    },
+  },
+  mounted() {
+    if (window.innerHeight >= 1024) return
+    this.$store.dispatch('top/onHoverType', this.types[this.currentTypeIndex])
+  },
+}
+</script>

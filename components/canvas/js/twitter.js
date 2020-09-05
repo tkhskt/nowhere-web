@@ -106,6 +106,7 @@ class Twitter {
     this.size.windowH = h
     this.camera.aspect = this.size.windowW / this.size.windowH
     this.resolution.set(w, h)
+    this.composer.setSize(w, h)
     this.camera.updateProjectionMatrix()
   }
 

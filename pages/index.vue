@@ -4,7 +4,13 @@
     <Logo class="logo" />
     <LinkText class="link-text" />
     <Artwork :images="images" />
-    <div class="links" @mouseover="onHoverLink" @mouseleave="onHoverOutLink">
+    <Next v-show="isMobile" class="next" :touch="touch" />
+    <div
+      v-show="!isMobile"
+      class="links"
+      @mouseover="onHoverLink"
+      @mouseleave="onHoverOutLink"
+    >
       <Trapezium :type="'spotify'" />
       <Trapezium :type="'twitter'" />
       <Trapezium :type="'fanbox'" />
@@ -29,19 +35,17 @@ export default {
         spotify: [],
         youtube: [],
       },
+      touch: false,
     }
   },
   computed: {
-    ...mapState('top', ['type', 'size']),
+    ...mapState('top', ['type', 'size', 'isMobile']),
   },
   watch: {
     size(value) {
       const container = this.$refs.container
       container.style.width = value.width + 'px'
       container.style.height = value.height + 'px'
-      // const load = this.$refs.load
-      // load.style.width = value.width + 'px'
-      // load.style.height = value.height + 'px'
     },
   },
   mounted() {
@@ -51,6 +55,8 @@ export default {
         height: window.innerHeight,
       })
       window.addEventListener('resize', this.onResize)
+      this.$refs.container.addEventListener('touchstart', this.onTouchStart)
+      this.$refs.container.addEventListener('touchend', this.onTouchEnd)
     })
     const db = firebase.firestore()
     const youtubePromise = db.collection('youtube').get()
@@ -81,6 +87,8 @@ export default {
   },
   beforeDestroy() {
     window.removeEventListener('resize', this.onResize)
+    this.$refs.container.removeEventListener('touchstart', this.onTouchStart)
+    this.$refs.container.removeEventListener('touchend', this.onTouchEnd)
   },
   methods: {
     onHoverLink() {
@@ -95,6 +103,12 @@ export default {
         height: window.innerHeight,
       }
       this.$store.dispatch('top/onResize', size)
+    },
+    onTouchStart() {
+      this.touch = true
+    },
+    onTouchEnd() {
+      this.touch = false
     },
   },
 }
@@ -128,6 +142,9 @@ export default {
   transform: translate(-50%, -50%);
   left: 20%;
   top: 50%;
+  z-index: 2;
+}
+.next {
   z-index: 2;
 }
 .links {

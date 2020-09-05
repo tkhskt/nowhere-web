@@ -6,6 +6,7 @@ export const state = () => ({
     width: 0,
     height: 0,
   },
+  isMobile: false,
 })
 
 export const actions = {
@@ -23,6 +24,7 @@ export const actions = {
     commit('setLoaded', true)
   },
   onResize({ commit }, value) {
+    commit('setIsMobile', value.width < 1024)
     commit('setSize', value)
   },
 }
@@ -39,5 +41,8 @@ export const mutations = {
   },
   setSize(state, value) {
     state.size = value
+  },
+  setIsMobile(state, value) {
+    state.isMobile = value
   },
 }

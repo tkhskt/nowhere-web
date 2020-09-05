@@ -1,6 +1,6 @@
 <template>
   <transition name="fade">
-    <section v-show="isHoverLink" ref="artwork" class="artwork">
+    <section v-show="isHoverLink || isMobile" ref="artwork" class="artwork">
       <canvas ref="canvas" class="artwork__canvas"></canvas>
     </section>
   </transition>
@@ -20,7 +20,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('top', ['type', 'isHoverLink', 'size']),
+    ...mapState('top', ['type', 'isHoverLink', 'size', 'isMobile']),
   },
   watch: {
     type(value) {
