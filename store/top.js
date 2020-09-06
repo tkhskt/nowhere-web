@@ -7,6 +7,7 @@ export const state = () => ({
     height: 0,
   },
   isMobile: false,
+  hoverClock: false,
 })
 
 export const actions = {
@@ -32,6 +33,12 @@ export const actions = {
     }
     commit('setSize', value)
   },
+  onHoverClock({ commit }) {
+    commit('setHoverClock', true)
+  },
+  onHoverOutClock({ commit }) {
+    commit('setHoverClock', false)
+  },
 }
 
 export const mutations = {
@@ -49,5 +56,8 @@ export const mutations = {
   },
   setIsMobile(state, value) {
     state.isMobile = value
+  },
+  setHoverClock(state, value) {
+    state.hoverClock = value
   },
 }

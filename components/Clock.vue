@@ -1,5 +1,5 @@
 <template>
-  <div class="clock">
+  <div class="clock" @mouseover="onHoverClock" @mouseleave="onHoverOutClock">
     <p class="clock__date">{{ date }}</p>
     <p class="clock__time">{{ time }}</p>
   </div>
@@ -9,8 +9,13 @@
 .clock {
   display: flex;
   font-size: 0.4em;
+  overflow: hidden;
   &__time {
     margin-left: 0.4em;
+    user-select: none;
+  }
+  &__date {
+    user-select: none;
   }
 }
 </style>
@@ -49,6 +54,12 @@ export default {
         ':' +
         this.padding(currentTime.getSeconds())
       window.requestAnimationFrame(this.getTime)
+    },
+    onHoverClock() {
+      this.$store.dispatch('top/onHoverClock')
+    },
+    onHoverOutClock() {
+      this.$store.dispatch('top/onHoverOutClock')
     },
   },
 }

@@ -19,7 +19,10 @@
     </div>
     <Frame class="frame--top" />
     <Frame class="frame--bottom" />
-    <Clock />
+    <template v-if="!isMobile">
+      <Clock />
+      <Info />
+    </template>
   </div>
 </template>
 
@@ -191,5 +194,11 @@ export default {
   position: absolute;
   bottom: $padding-page;
   right: $padding-page;
+}
+
+.info {
+  position: absolute;
+  right: $padding-page;
+  bottom: $padding-page;
 }
 </style>
