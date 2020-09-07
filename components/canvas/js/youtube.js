@@ -84,7 +84,6 @@ class YouTube {
       vertexShader,
       fragmentShader,
       uniforms: {
-        uTime: { value: 0.0 },
         uTexture: {
           value: texture,
         },
@@ -127,9 +126,8 @@ class YouTube {
     this.updateTimeRatio()
     this.totalTime += 0.01
     this.materials.forEach((material) => {
-      material.uniforms.uTime.value = elapsedTime
       material.uniforms.uPercent = {
-        value: 2 * Math.cos((this.totalTime * Math.PI) / 180),
+        value: 1.9,
       }
       material.needsUpdate = true
     })
