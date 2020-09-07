@@ -67,7 +67,11 @@ export default {
       this.$refs.container.addEventListener('touchmove', this.onTouchMove)
     })
     const db = firebase.firestore()
-    const youtubePromise = db.collection('youtube').get()
+    const youtubePromise = db
+      .collection('youtube')
+      .orderBy('time')
+      .limit(20)
+      .get()
     const spotifyPromise = db.collection('spotify').get()
     Promise.all([spotifyPromise, youtubePromise]).then((result) => {
       let spotifyImages = []
