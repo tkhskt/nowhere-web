@@ -114,6 +114,11 @@ export default {
    ** Build configuration
    ** See https://nuxtjs.org/api/configuration-build/
    */
+  loadingIndicator: {
+    name: 'cube-grid',
+    color: '#ffffff',
+    background: 'black',
+  },
   build: {
     extend(config, ctx) {
       if (config.module) {
