@@ -1,6 +1,5 @@
 <template>
   <div ref="container" class="container">
-    <Loading class="load" />
     <Logo class="logo" />
     <LinkText class="link-text" />
     <Artwork :images="images" />
@@ -141,14 +140,6 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-}
-.load {
-  position: fixed;
-  left: 100;
-  top: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 50;
 }
 .logo {
   position: absolute;
