@@ -1,6 +1,8 @@
 require('dotenv').config()
 // eslint-disable-next-line no-unused-vars
 const { FIREBASE_KEY } = process.env
+const siteName = 'Nowhere Unofficial Website'
+const description = 'Nowhere Monitoring System 2.0'
 
 export default {
   /*
@@ -18,7 +20,7 @@ export default {
    ** See https://nuxtjs.org/api/configuration-head
    */
   head: {
-    title: process.env.npm_package_name || '',
+    title: siteName,
     meta: [
       { charset: 'utf-8' },
       {
@@ -28,8 +30,29 @@ export default {
       {
         hid: 'description',
         name: 'description',
-        content: process.env.npm_package_description || '',
+        content: description,
       },
+      { hid: 'og:site_name', property: 'og:site_name', content: siteName },
+      { hid: 'og:type', property: 'og:type', content: 'website' },
+      {
+        hid: 'og:url',
+        property: 'og:url',
+        content: 'https://nowhere.system-2.net',
+      },
+      { hid: 'og:title', property: 'og:title', content: siteName },
+      {
+        hid: 'og:description',
+        property: 'og:description',
+        content: description,
+      },
+      {
+        hid: 'og:image',
+        property: 'og:image',
+        content: 'https://nowhere.system-2.net/icon.png',
+      },
+      { hid: 'twitter:card', name: 'twitter:card', content: 'summary' },
+      { hid: 'twitter:site', name: 'twitter:site', content: '@gericass' },
+      { hid: 'twitter:creator', name: 'twitter:creator', content: '@gericass' },
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
     script: [
