@@ -76,7 +76,7 @@ class YouTube {
     this.geometry = new THREE.PlaneBufferGeometry(40, 30, 30)
     const texturePromise = new Promise((resolve) => {
       const loader = new THREE.TextureLoader()
-      loader.load(imageUrl, resolve) // 'http://cors-anywhere.herokuapp.com/'
+      loader.load('https://cors-anywhere.herokuapp.com/' + imageUrl, resolve)
     })
     const texture = await texturePromise
 
