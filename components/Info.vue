@@ -16,7 +16,7 @@
         <div class="fonts__industry">Industry by Mattox Shuler</div>
       </div>
     </div>
-    <div ref="arrow" class="arrow" @click="onClick"></div>
+    <!-- <div ref="arrow" class="arrow" @click="onClick"></div> -->
     <!-- <div class="up-arrow"></div> -->
   </div>
 </template>
@@ -29,6 +29,7 @@
   padding-bottom: 10vmin;
   overflow: hidden;
   width: 18vw;
+  min-width: 400px;
   &__header-text {
     text-align: center;
     font-size: 0.4em;
@@ -48,6 +49,7 @@
   }
   &__fonts {
     display: flex;
+    margin-top: 2vmin;
     font-size: 0.25em;
     margin-top: 1.5vmin;
   }
@@ -79,15 +81,13 @@
   position: absolute;
   display: block;
   cursor: pointer;
-  width: 2vmin;
-  height: 2vmin;
+  width: unquote('max(2vmin, 24px)');
+  height: unquote('max(2vmin, 24px)');
   border-top: 1px solid $color-white;
   border-right: 1px solid $color-white;
   transform-origin: center;
-  // transform: translate(-50%, -50%);
   transform: rotate(135deg);
   bottom: 1vmin;
-  // left: 50%;
   left: 0;
   right: 0;
   margin: auto;
@@ -120,6 +120,9 @@ export default {
     this.$nextTick(() => {
       this.duration = 0.2
       this.shrinkDuration = 0.3
+      TweenLite.set(this.$refs.info, {
+        width: Math.max(window.innerWidth * 0.18, 450),
+      })
       this.close()
     })
     window.addEventListener('resize', this.resize)
@@ -132,7 +135,7 @@ export default {
       if (this.opened) {
         this.close()
       } else if (!this.opened && this.expanded) {
-        this.open()
+        // this.open()
       }
     },
     resize() {
@@ -143,7 +146,7 @@ export default {
         paddingTop: 0.02 * vMin,
         paddingLeft: 0.02 * vMin,
         paddingRight: 0.02 * vMin,
-        width: 0.18 * window.innerWidth,
+        width: Math.max(window.innerWidth * 0.18, 450),
         opacity: 0,
       })
       TweenLite.set(this.$refs.title, {
@@ -163,6 +166,9 @@ export default {
       const timeline = new TimelineMax({
         onStart: () => {
           this.animationRunning = true
+          TweenLite.set(this.$refs.info, {
+            minWidth: 0,
+          })
         },
         onComplete: () => {
           this.animationRunning = false
@@ -171,7 +177,7 @@ export default {
         },
       })
       this.closeInfo = TweenLite.to(this.$refs.info, this.duration, {
-        height: vMin * 0.03,
+        height: Math.max(vMin * 0.03, 36),
         paddingBottom: 0,
         paddingTop: 0,
         ease: Linear,
@@ -192,19 +198,18 @@ export default {
           ease: Linear,
         }
       )
-      this.rotateArrow = TweenMax.to(this.$refs.arrow, this.shrinkDuration, {
-        rotate: -45,
-        // translateX: '0%',
-        bottom: 0,
-        ease: Linear,
-      })
+      // this.rotateArrow = TweenMax.to(this.$refs.arrow, this.shrinkDuration, {
+      //   rotate: -45,
+      //   bottom: 0,
+      //   ease: Linear,
+      // })
       this.timeline = timeline
       timeline
         .add(this.closeInfo)
         .add(this.fadeTitle, '-=' + this.duration)
         .add(this.shrinkInfo)
         .add(this.removeInfoPadding, '-=' + this.duration)
-        .add(this.rotateArrow, '-=' + this.duration * 3)
+      // .add(this.rotateArrow, '-=' + this.duration * 3)
     },
     expand() {
       if (this.animationRunning) return
@@ -216,6 +221,7 @@ export default {
         onComplete: () => {
           this.animationRunning = false
           this.expanded = true
+          this.open()
         },
       })
       timeline
@@ -237,10 +243,13 @@ export default {
       timeline
         .add(this.closeInfo.reverse())
         .add(this.fadeTitle.reverse(), '-=' + this.duration)
-        .add(this.rotateArrow.reverse(), '-=' + this.duration)
+      // .add(this.rotateArrow.reverse(), '-=' + this.duration)
     },
     shrink() {
-      if (this.opened) return
+      if (this.opened) {
+        this.close()
+        return
+      }
       if (this.animationRunning) return
       const timeline = new TimelineMax({
         onStart: () => {
