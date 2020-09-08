@@ -116,7 +116,7 @@ class Twitter {
       near: this.camera.near,
       far: this.camera.far,
     })
-    this.mesh.dispose()
+    this.mesh.material.dispose()
     this.mesh.material = material
     this.composer.setSize(w, h)
     this.camera.updateProjectionMatrix()
