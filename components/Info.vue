@@ -134,8 +134,6 @@ export default {
     onClick() {
       if (this.opened) {
         this.close()
-      } else if (!this.opened && this.expanded) {
-        // this.open()
       }
     },
     resize() {
@@ -151,10 +149,6 @@ export default {
       })
       TweenLite.set(this.$refs.title, {
         opacity: 1,
-      })
-      TweenLite.set(this.$refs.arrow, {
-        rotation: 135,
-        bottom: 0.01 * vMin,
       })
       this.animationRunning = false
       this.timeline.kill()
@@ -198,18 +192,12 @@ export default {
           ease: Linear,
         }
       )
-      // this.rotateArrow = TweenMax.to(this.$refs.arrow, this.shrinkDuration, {
-      //   rotate: -45,
-      //   bottom: 0,
-      //   ease: Linear,
-      // })
       this.timeline = timeline
       timeline
         .add(this.closeInfo)
         .add(this.fadeTitle, '-=' + this.duration)
         .add(this.shrinkInfo)
         .add(this.removeInfoPadding, '-=' + this.duration)
-      // .add(this.rotateArrow, '-=' + this.duration * 3)
     },
     expand() {
       if (this.animationRunning) return
@@ -243,7 +231,6 @@ export default {
       timeline
         .add(this.closeInfo.reverse())
         .add(this.fadeTitle.reverse(), '-=' + this.duration)
-      // .add(this.rotateArrow.reverse(), '-=' + this.duration)
     },
     shrink() {
       if (this.opened) {
