@@ -13,6 +13,7 @@
 .next {
   display: flex;
   transition: padding 0.1s ease-out;
+  padding-right: 3vmin;
   &--pressed {
     padding-left: 10vmin;
     transition: padding 0.1s ease-in;
