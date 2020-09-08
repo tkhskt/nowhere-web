@@ -62,9 +62,13 @@ export default {
         height: window.innerHeight,
       })
       window.addEventListener('resize', this.onResize)
-      this.$refs.container.addEventListener('touchstart', this.onTouchStart)
+      this.$refs.container.addEventListener('touchstart', this.onTouchStart, {
+        passive: true,
+      })
       this.$refs.container.addEventListener('touchend', this.onTouchEnd)
-      this.$refs.container.addEventListener('touchmove', this.onTouchMove)
+      this.$refs.container.addEventListener('touchmove', this.onTouchMove, {
+        passive: true,
+      })
     })
     const db = firebase.firestore()
     const youtubePromise = db
